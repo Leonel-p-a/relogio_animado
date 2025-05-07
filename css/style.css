@@ -1,0 +1,143 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: black;
+    font-family: "Lexend Deca", sans-serif;
+}
+
+body {
+    background-color: rgb(9, 6, 22);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#container {
+    width: 80%;
+    height: 38%;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#contorno {
+    background-color: rgb(9, 6, 22);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 20px;
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+#contorno::after, #contorno::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: conic-gradient(from var(--angle), rgb(244, 71, 71), rgb(64, 64, 250), rgb(141, 225, 141), rgb(228, 131, 246), rgb(244, 71, 71));
+    z-index: -1;
+    padding: 5px;
+    animation: 2.5s spin linear infinite;
+    border-radius: 20px;
+}
+
+#contorno::before {
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+
+@keyframes spin {
+    from{
+        --angle: 0deg;
+    } to {
+        --angle: 360deg;
+    }
+}
+
+#relogio {
+    font-size: 4.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+#selecionar-tipo {
+    margin-top: 3rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#selecionar-tipo::after {
+    content: "▼";
+    position: absolute;
+    right: 5px;
+    top: 13%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+#selecionar-tipo #selecionar {
+    font-weight: bold;
+    padding: 10px;
+    appearance: none;
+    border-radius: 7px;
+    width: 200px;
+}
+
+#selecionar-tipo #selecionar:focus {
+    outline: transparent;
+}
+
+#container-temporizador {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#selecionar-tipo #totalTemporizador {
+    border-radius: 7px;
+    border: none;
+    padding: 7px 10px 7px 10px;
+}
+
+#selecionar-tipo #totalTemporizador:focus {
+    outline: transparent;
+}
+
+#selecionar-tipo #iniciar-parar-contagem {
+    padding: 10px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#selecionar-tipo #iniciar-parar-contagem:hover {
+    background-color: rgb(190, 188, 188);
+}
+
+
+
+@media screen and (min-width: 992px) {
+    #container {
+        width: 80%;
+        height: 58%;
+    }
+
+    #relogio {
+        font-size: 8rem;
+    }
+}
