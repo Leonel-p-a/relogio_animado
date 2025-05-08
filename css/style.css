@@ -17,7 +17,7 @@ body {
 
 #container {
     width: 80%;
-    height: 38%;
+    height: 42%;
     min-height: 150px;
     display: flex;
     justify-content: center;
@@ -34,6 +34,7 @@ body {
     justify-content: center;
     position: relative;
     border-radius: 20px;
+    padding: 20px;
 }
 
 @property --angle {
@@ -81,19 +82,9 @@ body {
     gap: 15px;
 }
 
-#selecionar-tipo::after {
-    content: "▼";
-    position: absolute;
-    right: 5px;
-    top: 13%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
 #selecionar-tipo #selecionar {
     font-weight: bold;
     padding: 10px;
-    appearance: none;
     border-radius: 7px;
     width: 200px;
 }
@@ -108,6 +99,17 @@ body {
     gap: 15px;
 }
 
+#unidade-tempo {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 7px;
+    width: 200px;
+}
+
+#unidade-tempo:focus {
+    outline: transparent;
+}
+
 #selecionar-tipo #totalTemporizador {
     border-radius: 7px;
     border: none;
@@ -118,11 +120,12 @@ body {
     outline: transparent;
 }
 
-#selecionar-tipo #iniciar-parar-contagem {
+button {
     padding: 10px;
     border-radius: 7px;
     font-weight: bold;
     cursor: pointer;
+    border: none;
 }
 
 #selecionar-tipo #iniciar-parar-contagem:hover {
@@ -134,7 +137,7 @@ body {
 @media screen and (min-width: 992px) {
     #container {
         width: 80%;
-        height: 58%;
+        height: 60%;
     }
 
     #relogio {
