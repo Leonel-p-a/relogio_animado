@@ -69,7 +69,7 @@ selecionar.addEventListener('change', () => {
 
 botaoIniciar.addEventListener('click', () => {
     if (estadoTemporizador === 'parado') {
-        let tempo = parseInt(inputTemporizador.value);
+        let tempo = parseFloat(inputTemporizador.value);
         const unidade = unidadeTempo.value;
 
         if (!isNaN(tempo) && tempo > 0) {
