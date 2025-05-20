@@ -22,11 +22,11 @@ function pararRelogio() {
 }
 
 function iniciarTemporizador() {
-    relogio.textContent = segundosRestantes;
+    relogio.textContent = formatarTempo(segundosRestantes);
 
     intervaloTemporizador = setInterval(() => {
         segundosRestantes--;
-        relogio.textContent = segundosRestantes;
+        relogio.textContent = formatarTempo(segundosRestantes);
 
         if (segundosRestantes <= 0) {
             clearInterval(intervaloTemporizador);
@@ -35,6 +35,14 @@ function iniciarTemporizador() {
             estadoTemporizador = 'parado';
         }
     }, 1000)
+}
+
+function formatarTempo(segundos) {
+    const horas = Math.floor(segundos / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const segundosRestantes = segundos % 60;
+
+    return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
 }
 
 selecionar.addEventListener('change', () => {
@@ -46,6 +54,7 @@ selecionar.addEventListener('change', () => {
         botaoResetar.disabled = false;
         unidadeTempo.disabled = false;
         pararRelogio();
+        relogio.textContent = formatarTempo(segundosRestantes);
     } else {
         inputTemporizador.disabled = true;
         botaoIniciar.disabled = true;
@@ -64,8 +73,11 @@ botaoIniciar.addEventListener('click', () => {
         const unidade = unidadeTempo.value;
 
         if (!isNaN(tempo) && tempo > 0) {
-            if (unidade === 'minutos') tempo *= 60;
-            else if (unidade === 'horas') tempo *= 3600;
+            if (unidade === 'minutos') {
+                tempo *= 60;
+            } else if (unidade === 'horas') {
+                tempo *= 3600;
+            }    
 
             segundosRestantes = Math.floor(tempo);
             iniciarTemporizador();
@@ -90,7 +102,7 @@ botaoIniciar.addEventListener('click', () => {
 botaoResetar.addEventListener('click', () => {
     clearInterval(intervaloTemporizador);
     segundosRestantes = 0;
-    relogio.textContent = 0;
+    relogio.textContent = formatarTempo(segundosRestantes);
     botaoIniciar.textContent = 'Iniciar';
     estadoTemporizador = 'parado';
 });
