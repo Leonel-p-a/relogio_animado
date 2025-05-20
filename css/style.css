@@ -99,24 +99,24 @@ body {
     gap: 15px;
 }
 
-#unidade-tempo {
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 7px;
-    width: 200px;
+#selecionar-tipo #container-temporizador #temporizador {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
 }
 
-#unidade-tempo:focus {
-    outline: transparent;
+.totalTemporizador {
+    width: 63px;
 }
 
-#selecionar-tipo #totalTemporizador {
+#selecionar-tipo .totalTemporizador {
     border-radius: 7px;
     border: none;
     padding: 7px 10px 7px 10px;
 }
 
-#selecionar-tipo #totalTemporizador:focus {
+#selecionar-tipo .totalTemporizador:focus {
     outline: transparent;
 }
 
@@ -129,6 +129,10 @@ button {
 }
 
 #selecionar-tipo #iniciar-parar-contagem:hover {
+    background-color: rgb(190, 188, 188);
+}
+
+#resetar-temporizador:hover {
     background-color: rgb(190, 188, 188);
 }
 

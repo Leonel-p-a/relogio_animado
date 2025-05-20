@@ -23,12 +23,11 @@
             </select>
 
             <div id="container-temporizador">
-                <select id="unidade-tempo" disabled>
-                    <option value="segundos" selected>Segundos</option>
-                    <option value="minutos">Minutos</option>
-                    <option value="horas">Horas</option>
-                </select>
-                <input type="number" name="totalTemporizador" id="totalTemporizador" disabled>
+                <div id="temporizador">
+                    <input type="number" name="totalHoras" id="totalHoras" class="totalTemporizador" placeholder="HH" disabled>
+                    <input type="number" name="totalMinutos" id="totalMinutos" class="totalTemporizador" placeholder="MM" disabled>
+                    <input type="number" name="totalSegundos" id="totalSegundos" class="totalTemporizador" placeholder="SS" disabled>
+                </div>
                 <button id="iniciar-parar-contagem" disabled>Iniciar</button>
                 <button id="resetar-temporizador" disabled>Resetar</button>
                 <audio id="som-alarme" src="arquivos/audios/alarm-clock-90867.mp3" preload="auto"></audio>

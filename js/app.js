@@ -5,10 +5,11 @@ let segundosRestantes = 0;
 
 const relogio = document.getElementById('relogio');
 const selecionar = document.getElementById('selecionar');
-const inputTemporizador = document.getElementById('totalTemporizador');
+const totalHoras = document.getElementById('totalHoras');
+const totalMinutos = document.getElementById('totalMinutos');
+const totalSegundos = document.getElementById('totalSegundos');
 const botaoIniciar = document.getElementById('iniciar-parar-contagem');
 const botaoResetar = document.getElementById('resetar-temporizador');
-const unidadeTempo = document.getElementById('unidade-tempo');
 
 function iniciarRelogio() {
     intervaloRelogio = setInterval(() => {
@@ -20,6 +21,63 @@ function iniciarRelogio() {
 function pararRelogio() {
     clearInterval(intervaloRelogio);
 }
+
+selecionar.addEventListener('change', () => {
+    const tipo = selecionar.value;
+
+    if (tipo === 'temporizador') {
+        botaoIniciar.disabled = false;
+        botaoResetar.disabled = false;
+        totalHoras.disabled = false;
+        totalMinutos.disabled = false;
+        totalSegundos.disabled = false
+        pararRelogio();
+        relogio.textContent = formatarTempo(segundosRestantes);
+    } else {
+        botaoIniciar.disabled = true;
+        botaoResetar.disabled = true;
+        totalHoras.disabled = true;
+        totalMinutos.disabled = true;
+        totalSegundos.disabled = true;
+        relogio.textContent = '';
+        totalHoras.value = '';
+        totalMinutos.value = '';
+        totalSegundos.value = '';
+        clearInterval(intervaloTemporizador)
+        iniciarRelogio();
+    }
+});
+
+totalHoras.addEventListener('input', () => {
+    const valor = parseInt(totalHoras.value);
+    if (isNaN(valor) || valor < 0) {
+        totalHoras.value = '';
+    } else {
+        totalHoras.value = valor;
+    }
+});
+
+totalMinutos.addEventListener('input', () => {
+    const valor = parseInt(totalMinutos.value) || 0;
+    totalMinutos.value = Math.min(valor, 59); // Máximo de 59 minutos
+
+    if (isNaN(valor) || valor < 0) {
+        totalMinutos.value = '';
+    } else {
+        totalMinutos.value = valor;
+    }
+});
+
+totalSegundos.addEventListener('input', () => {
+    const valor = parseInt(totalSegundos.value) || 0;
+    totalSegundos.value = Math.min(valor, 59); // Máximo de 59 segundos
+
+    if (isNaN(valor) || valor < 0) {
+        totalSegundos.value = '';
+    } else {
+        totalSegundos.value = valor;
+    }
+});
 
 function iniciarTemporizador() {
     relogio.textContent = formatarTempo(segundosRestantes);
@@ -45,41 +103,19 @@ function formatarTempo(segundos) {
     return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
 }
 
-selecionar.addEventListener('change', () => {
-    const tipo = selecionar.value;
-
-    if (tipo === 'temporizador') {
-        inputTemporizador.disabled = false;
-        botaoIniciar.disabled = false;
-        botaoResetar.disabled = false;
-        unidadeTempo.disabled = false;
-        pararRelogio();
-        relogio.textContent = formatarTempo(segundosRestantes);
-    } else {
-        inputTemporizador.disabled = true;
-        botaoIniciar.disabled = true;
-        botaoResetar.disabled = true;
-        unidadeTempo.disabled = true
-        relogio.textContent = '';
-        inputTemporizador.value = '';
-        clearInterval(intervaloTemporizador)
-        iniciarRelogio();
-    }
-});
-
 botaoIniciar.addEventListener('click', () => {
     if (estadoTemporizador === 'parado') {
-        let tempo = parseFloat(inputTemporizador.value);
-        const unidade = unidadeTempo.value;
+        const horas = parseInt(totalHoras.value) || 0;
+        const minutos = parseInt(totalMinutos.value) || 0;
+        const segundos = parseInt(totalSegundos.value) || 0;
 
-        if (!isNaN(tempo) && tempo > 0) {
-            if (unidade === 'minutos') {
-                tempo *= 60;
-            } else if (unidade === 'horas') {
-                tempo *= 3600;
-            }    
+        totalHoras.value = "";
+        totalMinutos.value = "";
+        totalSegundos.value = "";
 
-            segundosRestantes = Math.floor(tempo);
+        segundosRestantes = (horas * 3600) + (minutos * 60) + segundos;
+
+        if (segundosRestantes > 0) {
             iniciarTemporizador();
             botaoIniciar.textContent = 'Parar';
             estadoTemporizador = 'rodando';
@@ -102,7 +138,10 @@ botaoIniciar.addEventListener('click', () => {
 botaoResetar.addEventListener('click', () => {
     clearInterval(intervaloTemporizador);
     segundosRestantes = 0;
-    relogio.textContent = formatarTempo(segundosRestantes);
+    relogio.textContent = formatarTempo(0);
+    totalHoras.value = '';
+    totalMinutos.value = '';
+    totalSegundos.value = '';
     botaoIniciar.textContent = 'Iniciar';
     estadoTemporizador = 'parado';
 });
